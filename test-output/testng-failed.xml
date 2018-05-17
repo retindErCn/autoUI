@@ -4,6 +4,7 @@
   <listeners>
     <listener class-name="com.retinder.utils.extendReportListenerAdapter"/>
     <listener class-name="com.retinder.utils.extendReport"/>
+    <listener class-name="com.retinder.utils.testRetryListener"/>
   </listeners>
   <test thread-count="5" name="testExample(failed)">
     <classes>

@@ -44,7 +44,8 @@ public class extendReport implements IReporter {
 			result.values().forEach(x->{
 				setExtentNodes(x.getTestContext().getPassedTests(), LogStatus.PASS);
 				setExtentNodes(x.getTestContext().getFailedTests(), LogStatus.FAIL);
-				setExtentNodes(x.getTestContext().getSkippedTests(), LogStatus.SKIP);
+				//重跑的，之前的失败会算成skip，所以出报告的时候忽略他
+				//setExtentNodes(x.getTestContext().getSkippedTests(), LogStatus.SKIP);
 			});
 		}
 		extent.flush();
@@ -61,7 +62,9 @@ public class extendReport implements IReporter {
 				test.assignCategory(x.getMethod().getGroups());
 				if (x.getThrowable() != null) {
 					//这里指定截图位置
-					test.log(status, test.addScreenCapture("../"+x.getAttribute("errorScreenShot").toString()));
+					//注意如果有开启重试功能，只有最后一次执行会调用onTestFailed
+					if(!(x.getAttribute("errorScreenShot")==null))
+						test.log(status, test.addScreenCapture("../"+x.getAttribute("errorScreenShot").toString()));
 					test.log(status, x.getThrowable());
 				} else {
 					test.log(status, "Test" + status.toString().toLowerCase()
