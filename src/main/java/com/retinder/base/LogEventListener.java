@@ -112,7 +112,7 @@ public class LogEventListener implements WebDriverEventListener {
 		
 		//默认每次点击页面都先等个2s。等待页面加载好
 		try {
-			driver.manage().wait(2000L);
+			Thread.currentThread().sleep(2000L);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

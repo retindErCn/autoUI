@@ -16,7 +16,10 @@ import com.retinder.base.BasePage.driverManage;
 
 public class screenShot {
 
-	public void tackScreenShot(WebDriver driver, String element) {
+	public String tackScreenShot(WebDriver driver, String element) {
+		if (driver==null) {
+			driver=driverManage.driver;
+		}
 		String dir = "screenShot";
 		String time = new SimpleDateFormat("yyyyMMdd-HHmmss")
 				.format(new Date());
@@ -31,7 +34,7 @@ public class screenShot {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-
+		return shotPath;
 	}
 
 }

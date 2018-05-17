@@ -4,6 +4,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 
 import com.retinder.base.BasePage.driverManage;
+import static org.assertj.core.api.Assertions.*;
 
 public class BaseTest {
 	

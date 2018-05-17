@@ -36,7 +36,7 @@ public class BasePage {
 
 	public void pause(Long timeout) {
 		try {
-			driver.manage().wait(timeout);
+			Thread.currentThread().sleep(timeout);
 			logger.info("waitting " + timeout + "ms");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -117,45 +117,37 @@ public class BasePage {
 			break;
 		}
 	}
-	
-	public void select(WebElement we,String option){
-		Select select=new Select(we);
+
+	public void select(WebElement we, String option) {
+		Select select = new Select(we);
 		select.selectByVisibleText(option);
-		logger.info(option+" have been select");
+		logger.info(option + " have been select");
 	}
-	
-	
+
 	/*
-	 * ele select
-	 * 饿了么的组件展示出来是
-	 * <ul>
-	 * <li/>
-	 * </ul>
-	 * 很多前端框架都是这种。特殊的组件，需要重新编写定位的方法
+	 * ele select 饿了么的组件展示出来是 <ul> <li/> </ul> 很多前端框架都是这种。特殊的组件，需要重新编写定位的方法
 	 */
-	
-	public void selectUI(WebElement parent,String option){
-		parent.findElements(By.tagName("li")).stream().map(x->{
+
+	public void selectUI(WebElement parent, String option) {
+		parent.findElements(By.tagName("li")).stream().map(x -> {
 			if (x.getText().equals(option)) {
 				x.click();
-				logger.info(option+" have been selected!!");
+				logger.info(option + " have been selected!!");
 			}
 			return null;
 		});
 	}
-	
-	
-	public void enterFrame(String frameXpath){
-		logger.info("enter the frame of xpath："+frameXpath);
+
+	public void enterFrame(String frameXpath) {
+		logger.info("enter the frame of xpath：" + frameXpath);
 		driver.switchTo().frame(driver.findElement(By.xpath(frameXpath)));
 	}
-	
-	public void leaveFrame(){
+
+	public void leaveFrame() {
 		driver.switchTo().defaultContent();
 		logger.info("leave the frame");
 	}
-	
-	
+
 	public static class driverManage {
 		public static WebDriver driver;
 		public static ChromeDriverService server;
@@ -164,7 +156,8 @@ public class BasePage {
 			switch (browser) {
 			case "chrome":
 				server = new ChromeDriverService.Builder()
-						.usingDriverExecutable(new File("res/chromedriver.exe"))
+						.usingDriverExecutable(
+								new File("drivers/chromedriver.exe"))
 						.usingAnyFreePort().build();
 				try {
 					server.start();
