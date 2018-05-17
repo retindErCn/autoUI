@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1" verbose="1">
+	<listeners>
+		<!-- 添加自定义的报告跟流程控制 -->
+		<listener class-name="com.retinder.utils.extendReportListenerAdapter"></listener>
+		 <listener class-name="com.retinder.utils.extendReport"></listener>
+		<!-- <listener class-name="com.retinder.utils.testRetryListener"></listener>-->
+	</listeners>
+	<test name="testExample">
+		<classes>
+			<!-- 指定要执行的测试类 -->
+			<class name="com.retinder.test.BaiduSearchTest"  ></class>   
+    
+		</classes>
+	</test>
+</suite>

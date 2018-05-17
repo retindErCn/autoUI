@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite1]">
+  <listeners>
+    <listener class-name="com.retinder.utils.extendReportListenerAdapter"/>
+    <listener class-name="com.retinder.utils.extendReport"/>
+  </listeners>
+  <test thread-count="5" name="testExample(failed)">
+    <classes>
+      <class name="com.retinder.test.BaiduSearchTest">
+        <methods>
+          <include name="setUP"/>
+          <include name="errorTest"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.retinder.test.BaiduSearchTest -->
+    </classes>
+  </test> <!-- testExample(failed) -->
+</suite> <!-- Failed suite [Suite1] -->
