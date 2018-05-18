@@ -1,5 +1,6 @@
 package com.retinder.utils;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.testng.ITestContext;
@@ -13,21 +14,23 @@ import bsh.This;
 
 /**
  * 用来给extendReports做集成
+ * 
  * @author Administrator
  *
  */
 public class extendReportListenerAdapter extends TestListenerAdapter {
-	
-	Logger logger=Logger.getLogger(This.class.getName());
+
+	Logger logger = Logger.getLogger(This.class.getName());
 	extendReport extent;
 	ExtentTest test;
+	boolean sendMail = true;
 
 	@Override
 	public void onTestSuccess(ITestResult tr) {
 		// TODO Auto-generated method stub
 		super.onTestSuccess(tr);
 	}
-	
+
 	/**
 	 * 出错的时候自动截屏
 	 */
@@ -36,7 +39,7 @@ public class extendReportListenerAdapter extends TestListenerAdapter {
 	public void onTestFailure(ITestResult tr) {
 		// TODO Auto-generated method stub
 		super.onTestFailure(tr);
-		screenShot t=new screenShot();
+		screenShot t = new screenShot();
 		logger.info("take a screenShot when things go wrong!!");
 		tr.setAttribute("errorScreenShot", t.tackScreenShot(null, null));
 	}
@@ -57,14 +60,23 @@ public class extendReportListenerAdapter extends TestListenerAdapter {
 	public void onStart(ITestContext testContext) {
 		// TODO Auto-generated method stub
 		super.onStart(testContext);
-		
-		
+
 	}
 
 	@Override
 	public void onFinish(ITestContext testContext) {
 		// TODO Auto-generated method stub
 		super.onFinish(testContext);
+		// 这里发送邮件报告
+		if (sendMail) {
+			mailHandler mail = new mailHandler();
+			try {
+				mail.sendHtmlMail(new mailGenerator().generateHtml(testContext));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -72,7 +84,5 @@ public class extendReportListenerAdapter extends TestListenerAdapter {
 		// TODO Auto-generated method stub
 		super.onTestStart(result);
 	}
-	
-
 
 }
